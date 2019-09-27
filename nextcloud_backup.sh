@@ -2,6 +2,7 @@
 
 CONFIG_FILE_NAME="nextcloud_backup.conf"
 
+OK=0
 ERROR_CONFIG_FILE_UNAVAILABLE=1
 
 ERROR='\033[0;31m'
@@ -112,3 +113,5 @@ backup_web_directory
 backup_data_directory
 backup_database
 set_maintenance_mode 0
+
+exit OK
