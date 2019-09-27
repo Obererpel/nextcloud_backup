@@ -65,7 +65,9 @@ function backup_web_directory()
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_WEB.tar.gz"
   log "Target: $archive_file"
 
-  tar --create --gzip --file=$archive_file $NEXTCLOUD_WEB_DIRECTORY --exclude=$NEXTCLOUD_DATA_DIRECTORY
+  tar --create --gzip --file=$archive_file $NEXTCLOUD_WEB_DIRECTORY\
+      --exclude=$NEXTCLOUD_DATA_DIRECTORY\
+      --listed-incremental="$archive_file.snar"
 }
 
 function backup_data_directory()
@@ -75,7 +77,8 @@ function backup_data_directory()
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DATA.tar.gz"
   log "Target: $archive_file"
 
-  tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY
+  tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY\
+      --listed-incremental="$archive_file.snar"
 }
 
 function backup_database()
