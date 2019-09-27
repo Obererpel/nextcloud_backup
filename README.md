@@ -33,3 +33,4 @@ sh nextcloud_backup.sh
 | ------------|---------------------------------|
 | 0           | Ok                              |
 | 1           | The config file is not available|
+| 2           | Error setting maintenance mode  |

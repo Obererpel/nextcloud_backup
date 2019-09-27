@@ -4,6 +4,7 @@ CONFIG_FILE_NAME="nextcloud_backup.conf"
 
 OK=0
 ERROR_CONFIG_FILE_UNAVAILABLE=1
+ERROR_COULD_NOT_SET_MAINTENANCE_MODE=2
 
 ERROR='\033[0;31m'
 WARN='\033[1;33m'
@@ -65,6 +66,11 @@ function set_maintenance_mode()
   else
     log "Disable maintenance mode"
     php occ maintenance:mode --off
+  fi
+
+  if [ $? -ne 0 ]; then
+    log_error "Could not set maintenance mode";
+    exit $ERROR_COULD_NOT_SET_MAINTENANCE_MODE
   fi
 }
 
