@@ -1,6 +1,7 @@
 #!/bin/sh
 
 CONFIG_FILE_NAME="nextcloud_backup.conf"
+YEAR_MONTH=$(date +"%Y-%m")
 DATE=$(date +"%Y-%m-%d")
 
 ERROR_CONFIG_FILE_UNAVAILABLE=1
@@ -37,6 +38,13 @@ function load_config_file()
     exit ERROR_CONFIG_FILE_UNAVAILABLE;
   fi
   log "Successfully loaded config file"
+}
+
+function prepare_target_directory()
+{
+  mdkir $TARGET_FOLDER
+  TARGET_FOLDER="$TARGET_FOLDER/$YEAR_MONTH"
+  mkdir $TARGET_FOLDER
 }
 
 function set_maintenance_mode()
@@ -80,6 +88,7 @@ function backup_database()
 }
 
 load_config_file
+prepare_target_directory
 
 cd $NEXTCLOUD_WEB_DIRECTORY
 
