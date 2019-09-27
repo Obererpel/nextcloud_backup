@@ -1,8 +1,6 @@
 #!/bin/sh
 
 CONFIG_FILE_NAME="nextcloud_backup.conf"
-YEAR_MONTH=$(date +"%Y-%m")
-DATE=$(date +"%Y-%m-%d")
 
 ERROR_CONFIG_FILE_UNAVAILABLE=1
 
@@ -40,10 +38,21 @@ function load_config_file()
   log "Successfully loaded config file"
 }
 
+function get_date()
+{
+  DATE=$(date +"%Y-%m-%d")
+  YEAR=$(echo $DATE  | cut --delimiter=- -f1)
+  MONTH=$(echo $DATE  | cut --delimiter=- -f2)
+}
+
 function prepare_target_directory()
 {
-  mdkir $TARGET_FOLDER
-  TARGET_FOLDER="$TARGET_FOLDER/$YEAR_MONTH"
+  mkdir $TARGET_FOLDER
+
+  TARGET_FOLDER="$TARGET_FOLDER/$YEAR"
+  mkdir $TARGET_FOLDER
+
+  TARGET_FOLDER="$TARGET_FOLDER/$MONTH"
   mkdir $TARGET_FOLDER
 }
 
@@ -62,23 +71,25 @@ function backup_web_directory()
 {
   log "Backing up web direcotry"
 
+  snar_file="$TARGET_FOLDER/$TARGET_FILE_DATA.snar"
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_WEB.tar.gz"
   log "Target: $archive_file"
 
   tar --create --gzip --file=$archive_file $NEXTCLOUD_WEB_DIRECTORY\
       --exclude=$NEXTCLOUD_DATA_DIRECTORY\
-      --listed-incremental="$archive_file.snar"
+      --listed-incremental="$snar_file"
 }
 
 function backup_data_directory()
 {
   log "Backing up data direcotry"
 
+  snar_file="$TARGET_FOLDER/$TARGET_FILE_DATA.snar"
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DATA.tar.gz"
   log "Target: $archive_file"
 
   tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY\
-      --listed-incremental="$archive_file.snar"
+      --listed-incremental="$snar_file"
 }
 
 function backup_database()
@@ -91,6 +102,7 @@ function backup_database()
 }
 
 load_config_file
+get_date
 prepare_target_directory
 
 cd $NEXTCLOUD_WEB_DIRECTORY
