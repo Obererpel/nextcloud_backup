@@ -1,1 +1,15 @@
-nextcloud_directory=/var/www/nextcloud
+NEXTCLOUD_WEB_DIRECTORY=/var/www/nextcloud
+NEXTCLOUD_DATA_DIRECTORY=var/data/
+
+TARGET_FILE_WEB=nextcloud-web
+TARGET_FILE_DATA=nextcloud-data
+TARGET_FILE_DB=nextcloud-database
+TARGET_FOLDER=/var/backups
+
+# Define user name and password in ~/.my.cnf:
+# [mysqldump]
+# user=<user>
+# password=<password>
+
+DB_NAME="DB-NAME"
+DB_HOST="db.example.org"
