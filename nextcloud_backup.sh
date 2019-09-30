@@ -133,4 +133,4 @@ backup_data_directory
 backup_database
 set_maintenance_mode_via_config 0
 
-exit OK
+exit $OK
