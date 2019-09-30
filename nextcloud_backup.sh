@@ -76,7 +76,7 @@ function set_maintenance_mode()
 
 function backup_web_directory()
 {
-  log "Backing up web direcotry"
+  log "Backing up web directory"
 
   snar_file="$TARGET_FOLDER/$TARGET_FILE_DATA.snar"
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_WEB.tar.gz"
@@ -89,7 +89,7 @@ function backup_web_directory()
 
 function backup_data_directory()
 {
-  log "Backing up data direcotry"
+  log "Backing up data directory"
 
   snar_file="$TARGET_FOLDER/$TARGET_FILE_DATA.snar"
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DATA.tar.gz"
