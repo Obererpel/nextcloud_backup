@@ -77,13 +77,13 @@ function set_maintenance_mode()
 function set_maintenance_mode_via_config()
 {
   if [ $1 -eq 1 ]; then
-    log "Enable maintenance mode by modifying config.php"
-    sed --in-place --regexp-extended\
-    --expression="s/'maintenance' => (true|false),/'maintenance' => false,/g" $NEXTCLOUD_CONFIG_FILE
-  else
-    log "Disable maintenance mode by modifying config.php"
+    log "Enable maintenance mode by modifying $NEXTCLOUD_CONFIG_FILE"
     sed --in-place --regexp-extended\
     --expression="s/'maintenance' => (true|false),/'maintenance' => true,/g" $NEXTCLOUD_CONFIG_FILE
+  else
+    log "Disable maintenance mode by modifying $NEXTCLOUD_CONFIG_FILE"
+    sed --in-place --regexp-extended\
+    --expression="s/'maintenance' => (true|false),/'maintenance' => false,/g" $NEXTCLOUD_CONFIG_FILE
   fi
 }
 
