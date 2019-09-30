@@ -74,6 +74,19 @@ function set_maintenance_mode()
   fi
 }
 
+function set_maintenance_mode_via_config()
+{
+  if [ $1 -eq 1 ]; then
+    log "Enable maintenance mode by modifying config.php"
+    sed --in-place --regexp-extended\
+    --expression="s/'maintenance' => (true|false),/'maintenance' => false,/g" $NEXTCLOUD_CONFIG_FILE
+  else
+    log "Disable maintenance mode by modifying config.php"
+    sed --in-place --regexp-extended\
+    --expression="s/'maintenance' => (true|false),/'maintenance' => true,/g" $NEXTCLOUD_CONFIG_FILE
+  fi
+}
+
 function backup_web_directory()
 {
   log "Backing up web directory"
@@ -114,10 +127,10 @@ prepare_target_directory
 
 cd $NEXTCLOUD_WEB_DIRECTORY
 
-set_maintenance_mode 1
+set_maintenance_mode_via_config 1
 backup_web_directory
 backup_data_directory
 backup_database
-set_maintenance_mode 0
+set_maintenance_mode_via_config 0
 
 exit OK
