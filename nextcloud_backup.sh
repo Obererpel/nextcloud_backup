@@ -91,7 +91,7 @@ function backup_web_directory()
 {
   log "Backing up web directory"
 
-  snar_file="$TARGET_FOLDER/$TARGET_FILE_DATA.snar"
+  snar_file="$TARGET_FOLDER/$TARGET_FILE_WEB.snar"
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_WEB.tar.gz"
   log "Target: $archive_file"
 
