@@ -98,6 +98,7 @@ function backup_web_directory()
   tar --create --gzip --file=$archive_file $NEXTCLOUD_WEB_DIRECTORY\
       --exclude=$NEXTCLOUD_DATA_DIRECTORY\
       --listed-incremental="$snar_file"
+  create_checksum $archive_file
 }
 
 function backup_data_directory()
@@ -110,6 +111,7 @@ function backup_data_directory()
 
   tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY\
       --listed-incremental="$snar_file"
+  create_checksum $archive_file
 }
 
 function backup_database()
@@ -119,6 +121,12 @@ function backup_database()
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DB.sql.gz"
   log "Target: $archive_file"
   mysqldump $DB_NAME -h $DB_HOST | gzip -c > $archive_file
+  create_checksum $archive_file
+}
+
+function create_checksum()
+{
+   md5sum $1 >> MD5SUM
 }
 
 load_config_file
