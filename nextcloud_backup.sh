@@ -108,9 +108,8 @@ function backup_data_directory()
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DATA.tar.gz"
   log "Target: $archive_file"
 
-  tar --create --gzip --file=- $NEXTCLOUD_DATA_DIRECTORY\
-      --listed-incremental="$snar_file" | \
-  split --bytes=1G --numeric-suffixes - $archive_file
+  tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY\
+      --listed-incremental="$snar_file"
 }
 
 function backup_database()
