@@ -126,6 +126,7 @@ function backup_database()
 
 function create_checksum()
 {
+   log "Creating md5 checksum for $1"
    md5sum $1 >> MD5SUM
 }
 
