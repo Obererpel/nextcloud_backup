@@ -136,9 +136,9 @@ prepare_target_directory
 cd $NEXTCLOUD_WEB_DIRECTORY
 
 set_maintenance_mode_via_config 1
+backup_database
 backup_web_directory
 backup_data_directory
-backup_database
 set_maintenance_mode_via_config 0
 
 exit $OK
