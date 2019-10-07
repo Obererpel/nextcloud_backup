@@ -9,17 +9,19 @@ ERROR_COULD_NOT_SET_MAINTENANCE_MODE=2
 ERROR='\033[0;31m'
 WARN='\033[1;33m'
 INFO='\033[0;32m'
+TIME='\033[0;36m'
 NC='\033[0m'
 
 function log()
 {
+  TIMESTAMP="$TIME$(date +%Y-%m-%d\ %H:%M:%S)$NC"
   if [ "$2" == "$ERROR" ]; then
-    echo -e "$ERROR$1$NC" 1>&2
+    echo -e "$TIMESTAMP$ERROR$1$NC" 1>&2
   elif [ "$2" == "" ]
   then
-    echo -e "$INFO$1$NC"
+    echo -e "$TIMESTAMP$INFO$1$NC"
   else
-    echo -e "$2$1$NC"
+    echo -e "$TIMESTAMP$2$1$NC"
   fi
 }
 
