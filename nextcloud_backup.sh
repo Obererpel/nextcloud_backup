@@ -16,12 +16,12 @@ function log()
 {
   TIMESTAMP="$TIME$(date +%Y-%m-%d\ %H:%M:%S)$NC"
   if [ "$2" == "$ERROR" ]; then
-    echo -e "$TIMESTAMP$ERROR$1$NC" 1>&2
+    echo -e "$TIMESTAMP $ERROR$1$NC" 1>&2
   elif [ "$2" == "" ]
   then
-    echo -e "$TIMESTAMP$INFO$1$NC"
+    echo -e "$TIMESTAMP $INFO$1$NC"
   else
-    echo -e "$TIMESTAMP$2$1$NC"
+    echo -e "$TIMESTAMP $2$1$NC"
   fi
 }
 
