@@ -98,6 +98,7 @@ function backup_web_directory()
   tar --create --gzip --file=$archive_file $NEXTCLOUD_WEB_DIRECTORY\
       --exclude=$NEXTCLOUD_DATA_DIRECTORY\
       --listed-incremental="$snar_file"
+  create_checksum $archive_file
 }
 
 function backup_data_directory()
@@ -108,9 +109,9 @@ function backup_data_directory()
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DATA.tar.gz"
   log "Target: $archive_file"
 
-  tar --create --gzip --file=- $NEXTCLOUD_DATA_DIRECTORY\
-      --listed-incremental="$snar_file" | \
-  split --bytes=1G --numeric-suffixes - $archive_file
+  tar --create --gzip --file=$archive_file $NEXTCLOUD_DATA_DIRECTORY\
+      --listed-incremental="$snar_file"
+  create_checksum $archive_file
 }
 
 function backup_database()
@@ -119,7 +120,15 @@ function backup_database()
 
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DB.sql.gz"
   log "Target: $archive_file"
+
   mysqldump $DB_NAME -h $DB_HOST --single-transaction | gzip -c > $archive_file
+  create_checksum $archive_file
+}
+
+function create_checksum()
+{
+   log "Creating md5 checksum for $1"
+   md5sum $1 >> MD5SUM
 }
 
 load_config_file
@@ -129,9 +138,9 @@ prepare_target_directory
 cd $NEXTCLOUD_WEB_DIRECTORY
 
 set_maintenance_mode_via_config 1
+backup_database
 backup_web_directory
 backup_data_directory
-backup_database
 set_maintenance_mode_via_config 0
 
 exit $OK
