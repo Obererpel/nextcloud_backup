@@ -119,7 +119,7 @@ function backup_database()
 
   archive_file="$TARGET_FOLDER/$DATE-$TARGET_FILE_DB.sql.gz"
   log "Target: $archive_file"
-  mysqldump $DB_NAME -h $DB_HOST | gzip -c > $archive_file
+  mysqldump $DB_NAME -h $DB_HOST --single-transaction | gzip -c > $archive_file
 }
 
 load_config_file
