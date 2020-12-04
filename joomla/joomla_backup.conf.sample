@@ -1,0 +1,14 @@
+
+SOURCE_FOLDER=/var/www
+TARGET_FOLDER=/var/backup
+
+TARGET_FILE_DB=DB
+TARGET_FILE_FILES=FILES
+
+# Define user name and password in ~/.my.cnf:
+# [mysqldump]
+# user=<user>
+# password=<password>
+
+DB_NAME="DB-NAME"
+DB_HOST="db.example.org"
